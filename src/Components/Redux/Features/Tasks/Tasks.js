@@ -12,11 +12,13 @@ const taskSlice = createSlice({
   name: "tasksSlice",
   initialState,
   reducers: {
+    // Reducer for adding new task
     addTask: (state, { payload }) => {
       console.log(payload);
       if (state.tasks.length === 0) {
         state.tasks.push({ id: 1, status: "pending", ...payload });
       } else {
+        // Generating id based on task index
         const lastElement = state.tasks.at(-1);
         state.tasks.push({
           id: lastElement.id + 1,
@@ -24,12 +26,13 @@ const taskSlice = createSlice({
           ...payload,
         });
       }
+      //   setting item into local storage
       localStorage.setItem(
         "tasks",
         JSON.stringify(state.tasks.map((task) => task))
       );
     },
-
+    // reducer for deleting task
     removeTask: (state, { payload }) => {
       state.tasks = state.tasks.filter((item) => item.id !== payload);
       localStorage.removeItem(
