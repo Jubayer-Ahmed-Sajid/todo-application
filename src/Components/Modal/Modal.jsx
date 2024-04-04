@@ -53,7 +53,7 @@ const  MyModal=({ isOpen, setIsOpen, title, children })=> {
     </>
   );
 }
-
+// Prop type validation 
 MyModal.propTypes = {
   isOpen: PropTypes.bool,
   setIsOpen: PropTypes.func,

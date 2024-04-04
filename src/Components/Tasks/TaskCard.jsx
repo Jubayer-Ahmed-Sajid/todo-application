@@ -2,15 +2,21 @@ import { ArrowRightIcon, TrashIcon } from "@heroicons/react/24/solid";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { removeTask, updateStatus } from "../Redux/Features/Tasks/Tasks";
+import { Toaster, toast } from "sonner";
 
 const TaskCard = ({ task }) => {
   const dispatch = useDispatch();
+  const handleDeleteTask =(id)=>{
+    toast.success('Task has been deleted')
+    dispatch(removeTask(id))
+  }
   
- // Calculate status update 
+ // Calculate status update directly
  const updatedStatus = task.status === "pending" ? "running" : "completed";
 
   return (
-    <div className="space-y-4 bg-secondary/20 p-6 mt-6 rounded-sm">
+    <div className="space-y-4 bg-blue-400/20 p-6 mt-6 rounded-sm">
+      <Toaster richColors position="top-right"></Toaster>
       <p
         className={`text-lg font-semibold mb-3  ${
           task?.priority === "high" ? "text-red-500" : ""
@@ -35,7 +41,7 @@ const TaskCard = ({ task }) => {
             <ArrowRightIcon className="w-6 h-6"></ArrowRightIcon>
           </button>
           {/* Dispatch action to delete task */}
-          <button onClick={() => dispatch(removeTask(task.id))}>
+          <button onClick={()=>handleDeleteTask(task.id)}>
             <TrashIcon className="w-6 text-red-500 h-6"></TrashIcon>
           </button>
         </div>

@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { addTask } from "../Redux/Features/Tasks/Tasks";
 import PropTypes from "prop-types";
 import Select from "react-select";
+import { Toaster, toast } from "sonner";
 
 // Options for the "Assign To" dropdown
 const assignToOptions = [
@@ -22,100 +23,103 @@ const priorityOptions = [
 
 // Component for adding a new task
 
-const AddTaskModal = ({ isOpen, setIsOpen, title }) => {
+const AddTaskModal = ({ isOpen, setIsOpen, title}) => {
   const dispatch = useDispatch();
-  const { register, setValue, handleSubmit } = useForm();
+  const { register, setValue, handleSubmit,reset } = useForm();
   const onSubmit = (taskData) => {
+    toast.success("New task has been created");
     // Dispatch action to add task to Redux store
     dispatch(addTask(taskData));
-    
+    reset()
   };
 
-
-
-
-  
   return (
-    // Modal opening closing
-    <MyModal isOpen={isOpen} setIsOpen={setIsOpen}>
-      {/* Form starts here */}
+    <div>
+      <Toaster position="top-right" richColors></Toaster>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        <h2 className="text-xl font-bold text-center">{title}</h2>
+      <MyModal isOpen={isOpen} setIsOpen={setIsOpen}>
+        {/* Form starts here */}
 
-        <label className="form-control w-full ">
-          <div className="font-semibold label">
-            <span className="label-text">Title</span>
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <h2 className="text-xl font-bold text-center">{title}</h2>
+
+          <label className="form-control w-full ">
+            <div className="font-semibold label">
+              <span className="label-text">Title</span>
+            </div>
+            <input
+              {...register("title", { required: true })}
+              type="text"
+              placeholder="Title"
+              className="input input-bordered w-full "
+            />
+          </label>
+
+          <label className="form-control w-full ">
+            <div className="font-semibold label">
+              <span className="label-text">Description</span>
+            </div>
+            <textarea
+              {...register("description", { required: true })}
+              type="text"
+              placeholder="Description"
+              className="textarea textarea-bordered"
+            />
+          </label>
+
+          <label className="form-control w-full ">
+            <div className="font-semibold label">
+              <span className="label-text">Deadline</span>
+            </div>
+            <input
+              {...register("date", { required: true })}
+              type="date"
+              className="border-2 p-2 rounded-md"
+              name="date"
+              id=""
+            />
+          </label>
+
+          <label className="form-control w-full ">
+            <div className="font-semibold label">
+              <span className="label-text">Assign To</span>
+            </div>
+            <Select
+              {...register("assignedTo")}
+              id="assignedTo"
+              options={assignToOptions}
+              onChange={(selectedOption) =>
+                setValue("assignedTo", selectedOption.value)
+              }
+            />
+          </label>
+
+          <label className="form-control w-full ">
+            <div className="font-semibold label">
+              <span className="label-text">Set Priority</span>
+            </div>
+            <Select
+              {...register("priority")}
+              id="priority"
+              options={priorityOptions}
+              onChange={(selectedOptions) =>
+                setValue("priority", selectedOptions.value)
+              }
+            />
+          </label>
+
+          <div className="w-full flex justify-center">
+            <button
+              type="submit"
+              className="btn w-full text-white btn-primary rounded-lg"
+            >
+              Add Task
+            </button>
           </div>
-          <input
-            {...register("title", { required: true })}
-            type="text"
-            placeholder="Title"
-            className="input input-bordered w-full "
-          />
-        </label>
-
-        <label className="form-control w-full ">
-          <div className="font-semibold label">
-            <span className="label-text">Description</span>
-          </div>
-          <textarea
-            {...register("description", { required: true })}
-            type="text"
-            placeholder="Description"
-            className="textarea textarea-bordered"
-          />
-        </label>
-
-        <label className="form-control w-full ">
-          <div className="font-semibold label">
-            <span className="label-text">Deadline</span>
-          </div>
-          <input
-            {...register("date", { required: true })}
-            type="date"
-            className="border-2 p-2 rounded-md"
-            name="date"
-            id=""
-          />
-        </label>
-
-        <label className="form-control w-full ">
-          <div className="font-semibold label">
-            <span className="label-text">Assign To</span>
-          </div>
-          <Select
-            {...register("assignedTo")}
-            id="assignedTo"
-            options={assignToOptions}
-            onChange={(selectedOption) =>
-              setValue("assignedTo", selectedOption.value)
-            }
-          />
-        </label>
-
-        <label className="form-control w-full ">
-          <div className="font-semibold label">
-            <span className="label-text">Set Priority</span>
-          </div>
-          <Select
-            {...register("priority")}
-            id="priority"
-            options={priorityOptions}
-            onChange={(selectedOptions) =>
-              setValue("priority", selectedOptions.value)
-            }
-          />
-        </label>
-
-        <div className="w-full flex justify-center p-4">
-          <button type="submit" className="btn btn-primary rounded-lg">
-            Add Task
-          </button>
-        </div>
-      </form>
-      {/* Form ends here */}
-    </MyModal>
+        </form>
+        {/* Form ends here */}
+      </MyModal>
+    </div>
   );
 };
 // Prop types validation for AddTaskModal component
