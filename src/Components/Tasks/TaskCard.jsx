@@ -3,39 +3,39 @@ import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { removeTask, updateStatus } from "../Redux/Features/Tasks/Tasks";
 
-const TaskCard = ({ item }) => {
+const TaskCard = ({ task }) => {
   const dispatch = useDispatch();
-  let updatedStatus;
-  if (item.status === "pending") {
-    updatedStatus = "running";
-  } else {
-    updatedStatus = "completed";
-  }
+  
+ // Calculate status update directly
+ const updatedStatus = task.status === "pending" ? "running" : "completed";
+
   return (
     <div className="space-y-4 bg-secondary/20 p-6 mt-6 rounded-sm">
       <p
         className={`text-lg font-semibold mb-3  ${
-          item?.priority === "high" ? "text-red-500" : ""
-        } ${item?.priority === "medium" ? "text-yellow-500" : ""} ${
-          item?.priority === "low" ? "text-green-500" : ""
+          task?.priority === "high" ? "text-red-500" : ""
+        } ${task?.priority === "medium" ? "text-yellow-500" : ""} ${
+          task?.priority === "low" ? "text-green-500" : ""
         }`}
       >
-        {item?.title}
+        {task?.title}
       </p>
-      <p className="">{item?.description}</p>
-      <p className="text-gray-600">Assigned To: {item?.assignedTo}</p>
-      <div className="flex items-center justify-between">
-        <p className="">{item?.date}</p>
+      <p className="">{task?.description}</p>
+      <p className="text-gray-600">Assigned To: {task?.assignedTo}</p>
+      <div className="flex tasks-center justify-between">
+        <p className="">{task?.date}</p>
 
-        <div className="flex items-center gap-6">
+        <div className="flex tasks-center gap-6">
+          {/*  Dispatch action to update the task status */}
           <button
             onClick={() =>
-              dispatch(updateStatus({ id: item.id, status: updatedStatus }))
+              dispatch(updateStatus({ id: task.id, status: updatedStatus }))
             }
           >
             <ArrowRightIcon className="w-6 h-6"></ArrowRightIcon>
           </button>
-          <button onClick={() => dispatch(removeTask(item.id))}>
+          {/* Dispatch action to delete task */}
+          <button onClick={() => dispatch(removeTask(task.id))}>
             <TrashIcon className="w-6 text-red-500 h-6"></TrashIcon>
           </button>
         </div>
@@ -43,8 +43,9 @@ const TaskCard = ({ item }) => {
     </div>
   );
 };
+// Prop type validation
 TaskCard.propTypes = {
-  item: PropTypes.object,
+  task: PropTypes.object,
 };
 
 export default TaskCard;
