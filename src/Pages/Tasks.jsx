@@ -16,8 +16,8 @@ const Tasks = () => {
     const running = tasks.filter(task => task.status ==="running");
     const completed = tasks.filter(task => task.status ==="completed");
   return (
-    <div className="grid w-full grid-cols-12">
-      <div className="p-10 col-span-9">
+    <div className="md:grid w-full">
+      <div className="p-10 ">
         <div className="flex justify-between">
           <h2 className="text-2xl font-bold">Tasks</h2>
           <div className="flex  gap-4 ">
@@ -34,23 +34,23 @@ const Tasks = () => {
           </div>
         </div>
 
-        <div className="grid gap-4 mt-8  grid-cols-3">
+        <div className="grid gap-4 mt-8 grid-cols-1 lg:grid-cols-3">
           <div>
-            <div className="bg-primary/20 rounded-md p-6">Pending</div>
+            <div className="bg-primary/20 text-center rounded-md p-6">Pending</div>
             {
               pending && pending.map (task=>  <TaskCard item={task} key={task.id}></TaskCard>)
             }
          
           </div>
           <div>
-            <div className="bg-primary/20 rounded-lg p-6">Running</div>
+            <div className="bg-primary/20 text-center rounded-lg p-6">Running</div>
             {
               running && running.map (task=>  <TaskCard item={task} key={task.id}></TaskCard>)
             }
          
           </div>
           <div>
-            <div className="bg-primary/20 rounded-lg p-6">Completed</div>
+            <div className="bg-primary/20 text-center rounded-lg p-6">Completed</div>
             {
               completed && completed.map (task=>  <TaskCard item={task} key={task.id}></TaskCard>)
             }
@@ -59,18 +59,7 @@ const Tasks = () => {
         </div>
       </div>
 
-      <div className="col-span-3 space-y-3 border-secondary/20 pl-6 border-l-2 h-screen">
-        <h2 className="text-xl py-4">Member</h2>
-        <div className="flex gap-2">
-          <img src={profile} className="w-12 h-12" alt="" />
-          <img src={profile} className="w-12 h-12" alt="" />
-          <img src={profile} className="w-12 h-12" alt="" />
-          <img src={profile} className="w-12 h-12" alt="" />
-        </div>
-        <div>
-          <h2 className="text-xl">My Tasks</h2>
-        </div>
-      </div>
+    
     </div>
   );
 };

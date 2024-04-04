@@ -44,6 +44,7 @@ const taskSlice = createSlice({
       if (taskIndex !== -1) {
         // Create a copy of the tasks array to avoid mutating the original state
         const updatedTasks = [...state.tasks];
+
         // Update the status of the task at the found index
         updatedTasks[taskIndex].status = status;
         // Update local storage with the modified tasks array

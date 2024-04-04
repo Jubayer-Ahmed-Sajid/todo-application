@@ -10,16 +10,18 @@ const TaskCard = ({item}) => {
   let updatedStatus;
   if(item.status === "pending"){
     updatedStatus = 'running'
-  } else if (item.status === 'running'){
-    updatedStatus = 'completed'
   } else {
-    updatedStatus = 'archive'
-  }
+    updatedStatus = 'completed'
+  } 
   return (
-    <div className="space-y-3 bg-secondary/20 p-6 mt-6 rounded-sm">
-      <p className="text-red-500 text-xl">{item?.title}</p>
+    <div className="space-y-4 bg-secondary/20 p-6 mt-6 rounded-sm">
+      <p className={`text-lg font-semibold mb-3  ${
+          item?.priority === 'high' ? 'text-red-500' : ''
+        } ${item?.priority === 'medium' ? 'text-yellow-500' : ''} ${
+          item?.priority === 'low' ? 'text-green-500' : ''
+        }`}>{item?.title}</p>
       <p className="">{item?.description}</p>
-      <p className="">Assigned To: {item?.assignedTo}</p>
+      <p className="text-gray-600">Assigned To: {item?.assignedTo}</p>
       <div className="flex items-center justify-between">
         <p className="">{item?.date}</p>
 
