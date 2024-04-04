@@ -6,7 +6,7 @@ import { removeTask, updateStatus } from "../Redux/Features/Tasks/Tasks";
 const TaskCard = ({ task }) => {
   const dispatch = useDispatch();
   
- // Calculate status update directly
+ // Calculate status update 
  const updatedStatus = task.status === "pending" ? "running" : "completed";
 
   return (
