@@ -47,13 +47,6 @@ This is a simple mobile-responsive todo application built using Vite, React, Red
 
 2. Open your browser and navigate to `http://localhost:5173` to view the todo application.
 
-## Folder Structure
-
-
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a pull request or open an issue if you find any bugs or have suggestions for improvements.
 
 
 
